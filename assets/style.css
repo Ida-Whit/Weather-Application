@@ -1,0 +1,23 @@
+:root{
+    --background: rgb(22, 90, 249);
+    --font: rgb(202, 197, 197);
+}
+
+body{
+    background-color: var(--background);
+}
+
+#header{
+    text-align: center;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    font-family: 'Kanit', sans-serif;
+    background-color: var(--background);
+    color: var(--font);
+}
+
+#search{
+    position: absolute;
+    right: 20%;
+    color: var(--font)
+}
