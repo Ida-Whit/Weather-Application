@@ -7,11 +7,12 @@ const userStorage = localStorage.getItem("location") || []
 
 $("#btn").on("click", function(){
   $(this).val('')
+  console.log("Hello")
   //let userInput = $("#input").val()
   //userStorage.push(userInput)
   //localStorage.setItem("location", userInput)
   $("#past-cities").append(
-    '<li>userInput</li>')
+    "<li></li>")
 })
 
 
