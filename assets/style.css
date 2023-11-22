@@ -21,3 +21,8 @@ body{
     right: 20%;
     color: var(--font)
 }
+
+#currentCity{
+    border: 2px, solid, black;
+    list-style-type: none;
+}
