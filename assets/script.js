@@ -1,5 +1,7 @@
 // Icon URL https://openweathermap.org/img/wn/10d@2x.png 
 
+//`https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`
+
 $(function () {
   //letiables
   const userStorage = JSON.parse(localStorage.getItem("location")) || []
@@ -34,26 +36,30 @@ $(function () {
         return response.json()
       })
       .then(function (data) {
-        console.log(data)  
         const city = document.getElementById("currentCity")
-        for (let i = 0; i<5; i++) {
-          const date = document.createElement("li")
-          //const weatherConditions = document.createElement('li');
+
+        for (let i = 0; i < 40; i = i + 8) {
+          const newObject = Object.create(data.list[i]);
+          let iconcode = newObject.weather[0].icon;
+          let iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
+
+          const date = document.createElement("ul")
           const temperature = document.createElement('li');
           const humidity = document.createElement('li');
           const windSpeed = document.createElement("li");
-  
+          const icon = document.createElement("img")
+
+          $("img").attr("src", iconurl)
           date.innerHTML = "Date: " + data.list[i].dt_txt
-          //weatherConditions.innerHTML = data.list[i].weather;
           temperature.innerHTML = "Temperature: " + data.list[i].main.temp;
           humidity.innerHTML = "Humidity: " + data.list[i].main.humidity;
           windSpeed.innerHTML = "Wind Speed: " + data.list[i].wind.speed;
-        
+
           city.appendChild(date)
-          //city.appendChild(weatherConditions)
-          city.appendChild(temperature)
-          city.appendChild(humidity)
-          city.appendChild(windSpeed)
+          date.appendChild(icon)
+          date.appendChild(temperature)
+          date.appendChild(humidity)
+          date.appendChild(windSpeed)
         }
       });
   }
@@ -64,11 +70,4 @@ $(function () {
     localStorage.clear();
     savedSearches.children().detach()
   })
-
-
-
-  /* $("button").click(function() {
-     $(".append").append(
- '<div class="added">New HTML element added</div>');
- } */
 });

@@ -22,7 +22,14 @@ body{
     color: var(--font)
 }
 
-#currentCity{
+ul {
     border: 2px, solid, black;
+}
+
+li {
+    list-style-type: none;
+}
+
+#currentCity{
     list-style-type: none;
 }
