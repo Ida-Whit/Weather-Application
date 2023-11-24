@@ -17,7 +17,8 @@
         <div class="container-fluid">
           <a class="navbar-brand">Type in a location</a>
           <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <input id= "city" class="form-control-city me-2" type="search" placeholder="City" aria-label="City">
+            <input id= "state" class="form-control-state me-2" type="search" placeholder="State" aria-label="State">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         </div>
@@ -26,15 +27,18 @@
     <div class="container text-center">
         <div class="row align-items-start">
           
-            <section class="col-sm-3">
+          <section class="col-sm-3">
                 <ul id="past-cities" class="savedSearches"></ul>
             <button id="clear-btn" type="button">Delete Searches</button>
           </section>
 
+          <section>
+            <h2 id="current">Current Weather</h2>
+          </section>
+
           <section class="col-auto">
-            <h2 id="image">City that was Searched:</h2>
-            <section id="currentCity"></section>
-            <div id="forecast"><!--Will place the 5-day forecast here--></div>
+            <h2>5-Day Weather Forecast:</h2>
+            <div id="forecast"></div>
           </section>
         
         </div>
