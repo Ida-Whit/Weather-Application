@@ -60,6 +60,11 @@ $(function () {
   function currentWeather() {
     let userCity = $("#city").val()
     let userState = $("#state").val()
+
+    if(userCity === "" || userState === "") {
+      alert ("Please enter valid city and state abbreviations");
+    }
+
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${userCity},${userState},us&appid=${APIKey}`)
       .then(function (response) {
         return response.json()
@@ -91,7 +96,9 @@ $(function () {
             name.appendChild(humidity)
             name.appendChild(windSpeed)
           })
-      })
+          .catch(error)
+          console.error("Error fetching data",)
+        })
     forecast()
   };
 
@@ -99,9 +106,10 @@ $(function () {
   function forecast() {
     let userCity = $("#city").val()
     let userState = $("#state").val()
+    
 
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${userCity},${userState},us&appid=${APIKey}`)
-      .then(function (response) {
+    .then(function (response) {
         return response.json()
       })
       .then(function (data) {
