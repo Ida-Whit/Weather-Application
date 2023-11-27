@@ -4,6 +4,8 @@
 
 //`https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`
 
+
+
 $(function () {
   //variables
   const userStorage = JSON.parse(localStorage.getItem("location")) || []
@@ -14,17 +16,17 @@ $(function () {
   const temperatureC = document.createElement('ul');
   const humidity = document.createElement('li');
   const windSpeed = document.createElement("li");
-  const name = document.createElement("h1")
+  const name = document.createElement("h1");
 
   // Pull from local Storage and display past searches on page load
   if (userStorage != null) {
     for (let i = 0; i < userStorage.length; i++) {
-      savedSearches.append($("<button class = saved></button>").text(userStorage[i]))
+      savedSearches.append($("<button class = btn-secondary btn></button>").text(userStorage[i]))
     }
   }
 
-   // Listen for clean button click and clear local storage and recent searches buttons
-   $("#clear-btn").on("click", function () {
+  // Listen for clean button click and clear local storage and recent searches buttons
+  $("#clear-btn").on("click", function () {
     localStorage.clear();
     savedSearches.children().detach()
   })
@@ -36,13 +38,22 @@ $(function () {
     currentWeather();
   })
 
+  //Listen for button click and take you to the search results of that button
+  $(".btn-secondary").on("click", function(event) {
+    event.preventDefault();
+    newVariable = this.textContent.split(", ")
+    $("#city").val(newVariable[0])
+    $("#state").val(newVariable[1])
+    $(".btn").click()
+  })
+
   function addSearched() {
     const userCity = $("#city").val()
     const userState = $("#state").val()
     userInput = userCity + ", " + userState
     userStorage.push(userInput)
     localStorage.setItem("location", JSON.stringify(userStorage))
-    savedSearches.append($("<button class = saved></button>").text(userInput))
+    savedSearches.append($("<button class = btn-secondary btn></button>").text(userInput))
   }
 
   //Run API search for lat and long and then current weather
@@ -62,15 +73,18 @@ $(function () {
             return response.json()
           })
           .then(function (data) {
+            const date = dayjs()
             const iconcode = data.weather[0].icon
             const iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
 
             name.innerHTML = userCity + ", " + userState;
+            current.innerHTML = date.format("dddd, MMMM D, YYYY")
             temperatureC.innerHTML = "Temperature: " + data.main.temp + '\u00B0' + "F";
             humidity.innerHTML = "Humidity: " + data.main.humidity + "%";
             windSpeed.innerHTML = "Wind Speed: " + data.wind.speed + "mph";
 
             icon.setAttribute("src", iconurl)
+
             current.appendChild(name)
             name.appendChild(icon)
             name.appendChild(temperatureC)
@@ -100,6 +114,7 @@ $(function () {
           })
           .then(function (data) {
             const city = document.getElementById("forecast")
+            city.innerHTML = ""
             for (let i = 0; i < 40; i = i + 8) {
               let iconcode = data.list[i].weather[0].icon;
               let iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
@@ -115,7 +130,7 @@ $(function () {
               windSpeed.innerHTML = "Wind Speed: " + data.list[i].wind.speed + "mph";
 
               icon.setAttribute("src", iconurl)
-              
+
               city.appendChild(date)
               date.appendChild(icon)
               date.appendChild(temperature)
@@ -126,11 +141,3 @@ $(function () {
       });
   };
 });
-
-/*//Listen for button click and take you to the search results of that button
-$(".savedSearches").on("click", ".saved", function(event) {
-  console.log(this)  
-  event.preventDefault();
-    $("#input").val(this.textContent)
-    $(".btn").click()   
-})*/
